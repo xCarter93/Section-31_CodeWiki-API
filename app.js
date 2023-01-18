@@ -30,7 +30,9 @@ app.get("/", (req, res) => {
 app.get("/articles", (req, res) => {
 	Article.find({}, (err, articles) => {
 		if (!err) {
-			console.log(articles);
+			res.send(articles);
+		} else {
+			res.send(err);
 		}
 	});
 });
