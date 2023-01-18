@@ -27,6 +27,14 @@ app.get("/", (req, res) => {
 	res.send("Connected");
 });
 
+app.get("/articles", (req, res) => {
+	Article.find({}, (err, articles) => {
+		if (!err) {
+			console.log(articles);
+		}
+	});
+});
+
 app.listen(3000, () => {
 	console.log("Server is up and running.");
 });
