@@ -37,6 +37,24 @@ app.get("/articles", (req, res) => {
 	});
 });
 
+app.post("/articles", (req, res) => {
+	let title = req.body.title;
+	let content = req.body.content;
+
+	const article = new Article({
+		title: title,
+		content: content,
+	});
+
+	article.save((err) => {
+		if (err) {
+			res.send(err);
+		} else {
+			res.send("Successfully added new article.");
+		}
+	});
+});
+
 app.listen(3000, () => {
 	console.log("Server is up and running.");
 });
