@@ -70,14 +70,34 @@ app
 	.get((req, res) => {
 		Article.findOne({ title: req.params.articleTitle }, (err, article) => {
 			if (!err) {
-				res.send(article);
+				if (article) {
+					res.send(article);
+				} else {
+					res.send("No article found.");
+				}
 			} else {
 				res.send(err);
 			}
 		});
 	})
-	.put()
-	.patch();
+	.put((req, res) => {
+		Article.replaceOne({ title: req.params.articleTitle }, req.body, (err) => {
+			if (!err) {
+				res.send("Successfully updated article.");
+			} else {
+				res.send(err);
+			}
+		});
+	})
+	.patch((req, res) => {
+		Article.updateOne({ title: req.params.articleTitle }, req.body, (err) => {
+			if (!err) {
+				res.send("Successfully updated article");
+			} else {
+				res.send(err);
+			}
+		});
+	});
 
 app.listen(3000, () => {
 	console.log("Server is up and running.");
