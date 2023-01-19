@@ -65,6 +65,20 @@ app
 		});
 	});
 
+app
+	.route("/articles/:articleTitle")
+	.get((req, res) => {
+		Article.findOne({ title: req.params.articleTitle }, (err, article) => {
+			if (!err) {
+				res.send(article);
+			} else {
+				res.send(err);
+			}
+		});
+	})
+	.put()
+	.patch();
+
 app.listen(3000, () => {
 	console.log("Server is up and running.");
 });
