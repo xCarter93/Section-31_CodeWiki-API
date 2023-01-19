@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const { application } = require("express");
+const data = require(`${__dirname}/mongoPassword.json`);
 
 const app = express();
 app.set("view engine", "ejs");
@@ -13,7 +14,7 @@ app.use(express.static("public"));
 
 mongoose.set("strictQuery", false);
 const db = "wikiDB";
-const mongoURL = `mongodb+srv://xcarter93:ISXi7JvzRagD6Ub3@cluster0.jwhx2lt.mongodb.net/${db}?retryWrites=true&w=majority`;
+const mongoURL = `mongodb+srv://xcarter93:${data.password}@cluster0.jwhx2lt.mongodb.net/${db}?retryWrites=true&w=majority`;
 mongoose.connect(mongoURL);
 
 const articleSchema = new mongoose.Schema({
