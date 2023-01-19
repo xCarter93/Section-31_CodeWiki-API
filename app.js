@@ -27,43 +27,43 @@ app.get("/", (req, res) => {
 	res.send("Connected");
 });
 
-app.get("/articles", (req, res) => {
-	Article.find({}, (err, articles) => {
-		if (!err) {
-			res.send(articles);
-		} else {
-			res.send(err);
-		}
-	});
-});
+app
+	.route("/articles")
+	.get((req, res) => {
+		Article.find({}, (err, articles) => {
+			if (!err) {
+				res.send(articles);
+			} else {
+				res.send(err);
+			}
+		});
+	})
+	.post((req, res) => {
+		let title = req.body.title;
+		let content = req.body.content;
 
-app.post("/articles", (req, res) => {
-	let title = req.body.title;
-	let content = req.body.content;
+		const article = new Article({
+			title: title,
+			content: content,
+		});
 
-	const article = new Article({
-		title: title,
-		content: content,
+		article.save((err) => {
+			if (err) {
+				res.send(err);
+			} else {
+				res.send("Successfully added new article.");
+			}
+		});
+	})
+	.delete((req, res) => {
+		Article.deleteMany((err) => {
+			if (!err) {
+				res.send("Successfully deleted articles.");
+			} else {
+				res.send(err);
+			}
+		});
 	});
-
-	article.save((err) => {
-		if (err) {
-			res.send(err);
-		} else {
-			res.send("Successfully added new article.");
-		}
-	});
-});
-
-app.delete("/articles", (req, res) => {
-	Article.deleteMany((err) => {
-		if (!err) {
-			res.send("Successfully deleted articles.");
-		} else {
-			res.send(err);
-		}
-	});
-});
 
 app.listen(3000, () => {
 	console.log("Server is up and running.");
